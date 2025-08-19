@@ -33,7 +33,9 @@ class Dashboard extends Component
                     $instanceCount++;
                 }
             }
-            $totalSkor = $totalSkor / ($instanceCount);
+            if ($instanceCount > 0) {
+                $totalSkor = $totalSkor / ($instanceCount);
+            }
             $grade = Grade::where('nilai', '<=', $totalSkor)
                 ->orderBy('nilai', 'desc')
                 ->first();
