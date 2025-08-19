@@ -11,16 +11,16 @@
                     <table id="myDataTable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>
+                                <th width="300">
                                     Pengguna
                                 </th>
-                                <th class="text-center">
+                                <th class="text-center" width="100">
                                     Jenis Pengguna
                                 </th>
-                                <th class="text-center">
+                                <th class="text-center" width="300">
                                     Instansi
                                 </th>
-                                <th class="no-export text-center">
+                                <th class="no-export text-center" width="100">
                                     Opsi
                                 </th>
                             </tr>
