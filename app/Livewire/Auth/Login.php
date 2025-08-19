@@ -32,8 +32,24 @@ class Login extends Component
             'password' => 'Kata Sandi',
         ]);
 
+        $userRole = User::where('username', $this->username)->first();
+        if (!$userRole) {
+            LivewireAlert::title('Peringatan!')
+                ->text('Pengguna tidak ditemukan. Silakan hubungi administrator.')
+                ->warning()
+                ->toast()
+                ->position('top-end')
+                ->show();
+            return;
+        }
+
+        // if ($userRole->role_id === 1) {
+        //     // Redirect to admin dashboard
+        //     return redirect()->route('admin.dashboard');
+        // }
+
         // Perform login action
-        if ($this->username == 'developer') {
+        if ($userRole->role_id === 1) {
             Auth::attempt([
                 'username' => $this->username,
                 'password' => $this->password,
