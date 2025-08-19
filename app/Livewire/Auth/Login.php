@@ -24,14 +24,6 @@ class Login extends Component
 
     function login()
     {
-        $this->validate([
-            'username' => 'required|alpha_num',
-            'password' => 'required|string',
-        ], [], [
-            'username' => 'NIP',
-            'password' => 'Kata Sandi',
-        ]);
-
         $userRole = User::where('username', $this->username)->first();
         if (!$userRole) {
             LivewireAlert::title('Peringatan!')
@@ -43,13 +35,15 @@ class Login extends Component
             return;
         }
 
-        // if ($userRole->role_id === 1) {
-        //     // Redirect to admin dashboard
-        //     return redirect()->route('admin.dashboard');
-        // }
-
-        // Perform login action
         if ($userRole->role_id === 1) {
+            $this->validate([
+                'username' => 'required|alpha_num',
+                'password' => 'required|string',
+            ], [], [
+                'username' => 'NIP',
+                'password' => 'Kata Sandi',
+            ]);
+
             Auth::attempt([
                 'username' => $this->username,
                 'password' => $this->password,
@@ -67,6 +61,20 @@ class Login extends Component
                 $this->reset(['password']);
             }
         } else {
+            $this->validate([
+                'username' => 'required|alpha_num',
+                'password' => 'required|string',
+                'captcha' => 'required|captcha'
+            ], [
+                'captcha.required' => 'Captcha tidak boleh kosong',
+                'captcha.captcha' => 'Captcha tidak cocok'
+
+            ], [
+                'username' => 'NIP',
+                'password' => 'Kata Sandi',
+                'captcha' => 'Captcha'
+            ]);
+
             $uri = 'https://semesta.oganilirkab.go.id/api/auth-user-evalakip';
             $response = Http::withHeaders([
                 'Accept' => 'application/json',
@@ -112,5 +120,11 @@ class Login extends Component
                 $this->reset(['password']);
             }
         }
+    }
+
+
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha' => captcha_img()]);
     }
 }

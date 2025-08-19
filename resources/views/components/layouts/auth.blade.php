@@ -33,7 +33,8 @@
 <body>
 
     <!--authentication-->
-    <div class="auth-basic-wrapper d-flex align-items-center justify-content-center">
+    <div class="auth-basic-wrapper d-flex align-items-center justify-content-center"
+        style="background: url('{{ asset('assets/bg-login.png') }}'); background-size: cover; background-position: center;">
         <div class="container-fluid my-5 my-lg-0">
             <div class="row">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto">

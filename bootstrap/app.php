@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'EvaluatorRoutes' => App\Http\Middleware\EvaluatorAuthMiddleware::class,
             'InstanceRoutes' => App\Http\Middleware\InstanceAdminMiddleware::class,
             'SuperAdminRoutes' => App\Http\Middleware\SuperAdminRouteMiddleware::class,
+            'Captcha' => Mews\Captcha\Facades\Captcha::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
