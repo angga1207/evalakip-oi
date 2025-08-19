@@ -129,6 +129,7 @@ class Detail extends Component
                         'skor' => $jawaban ? $jawaban->skor : null,
                         'calculated_score' => $calculatedScore,
                         'catatan' => $jawaban ? $jawaban->catatan : null,
+                        'catatan_evaluator' => $jawaban ? $jawaban->catatan_evaluator : null,
                         'new_evidence' => null,
                         'evidence' => $jawaban ? $jawaban->evidence : null,
                     ];

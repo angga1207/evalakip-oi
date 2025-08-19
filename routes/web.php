@@ -12,6 +12,7 @@ Route::get('/logout', App\Livewire\Auth\Logout::class)->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', App\Livewire\Dashboard::class)->name('dashboard');
+    Route::get('/profile', App\Livewire\User\Me::class)->name('profile');
 
     Route::middleware(['InstanceRoutes'])->group(function () {
         // Penilaian

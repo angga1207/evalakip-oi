@@ -26,7 +26,7 @@ use App\Models\Data\Grade;
                             </h6>
                         </div>
                         <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-grd-royal">
+                            <span class="badge bg-grd-royal fs-6">
                                 @php
                                 $skor = 0;
                                 $average = 0;
@@ -41,7 +41,7 @@ use App\Models\Data\Grade;
                                 @endphp
                                 {{ number_format($skor, 2, ',', '.') }}
                             </span>
-                            <span class="badge bg-grd-primary mr-2">
+                            <span class="badge bg-grd-primary fs-6 mr-2">
                                 {{ number_format($data['component']['bobot'], 2, ',', '.') }}
                             </span>
                         </div>
@@ -61,7 +61,7 @@ use App\Models\Data\Grade;
                             </h6>
                         </div>
                         <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-grd-royal">
+                            <span class="badge bg-grd-royal fs-6">
                                 @php
                                 $skor = 1;
                                 $average = 0;
@@ -75,7 +75,7 @@ use App\Models\Data\Grade;
                                 @endphp
                                 {{ number_format($skor, 2, ',', '.') }}
                             </span>
-                            <span class="badge bg-grd-primary mr-2">
+                            <span class="badge bg-grd-primary fs-6 mr-2">
                                 {{ number_format($subComponent['bobot'], 2, ',', '.') }}
                             </span>
                         </div>

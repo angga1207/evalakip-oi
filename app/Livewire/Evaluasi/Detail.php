@@ -110,6 +110,9 @@ class Detail extends Component
                     if ($jawaban && $jawaban->is_submitted) {
                         $this->isSubmitted = true;
                     }
+                    if ($jawaban && $jawaban->is_verified) {
+                        $this->isVerified = true;
+                    }
 
                     // total skor = rata-rata skor dari semua kriteria di subkomponen dikali dengan bobot subkomponen
                     $calculatedScore = floatval($jawaban->skor ?? 0) * floatval($child['bobot']) / collect($child['criterias'])->where('is_active', true)->count();
@@ -125,6 +128,7 @@ class Detail extends Component
                         'skor' => $jawaban ? $jawaban->skor : null,
                         'calculated_score' => $calculatedScore,
                         'catatan' => $jawaban ? $jawaban->catatan : null,
+                        'catatan_evaluator' => $jawaban ? $jawaban->catatan_evaluator : null,
                         'new_evidence' => null,
                         'evidence' => $jawaban ? $jawaban->evidence : null,
                     ];
@@ -132,6 +136,7 @@ class Detail extends Component
             }
         }
 
+        // dd($this->dataPenilaian);
         $this->totalSkor = $totalSkor;
         $this->totalBobot = $totalBobot;
         // dd($this->isSubmitted ? 'Data sudah disubmit' : 'Data belum disubmit');
@@ -166,7 +171,7 @@ class Detail extends Component
     function confirmVerify()
     {
         LivewireAlert::title('Konfirmasi')
-            ->text('Apakah Anda yakin untuk mengirim data penilaian?')
+            ->text('Apakah Anda yakin untuk mengevaluasi data ini?')
             ->warning()
             ->allowOutsideClick(false)
             ->allowEscapeKey(false)
@@ -207,14 +212,128 @@ class Detail extends Component
 
             DB::commit();
             LivewireAlert::title('Berhasil')
-                ->text('Data penilaian berhasil diverifikasi.')
+                ->text('Data penilaian berhasil dievaluasi.')
                 ->success()
                 ->show();
             $this->_getDataQuestionaries();
         } catch (\Exception $e) {
             DB::rollBack();
             LivewireAlert::title('Gagal')
-                ->text('Terjadi kesalahan saat melakukan verifikasi: ' . $e->getMessage())
+                ->text('Terjadi kesalahan saat melakukan evaluasi: ' . $e->getMessage())
+                ->error()
+                ->show();
+            return;
+        }
+    }
+
+    function confirmReset()
+    {
+        LivewireAlert::title('Konfirmasi')
+            ->text('Apakah Anda yakin untuk mengembalikan data penilaian?')
+            ->warning()
+            ->allowOutsideClick(false)
+            ->allowEscapeKey(false)
+            ->confirmButtonText('Kirim')
+            ->cancelButtonText('Batal')
+            ->cancelButtonColor('#d33')
+            ->confirmButtonColor('#3085d6')
+            ->denyButtonText('Tidak')
+            ->denyButtonColor('#d33')
+            ->asConfirm()
+            ->onConfirm('resetStatus')
+            ->show();
+    }
+
+    function resetStatus()
+    {
+        DB::beginTransaction();
+        try {
+            foreach ($this->dataPenilaian as $key => $penilaian) {
+                foreach ($penilaian['children'] as $keyChild => $child) {
+                    foreach ($child['criterias'] as $keyCriteria => $criteria) {
+                        $jawaban = Jawaban::where('ref_periode_id', $this->periode->id)
+                            ->where('criteria_id', $criteria['criteria_id'])
+                            ->where('instance_id', $this->instance)
+                            ->first();
+                        if (!$jawaban) {
+                            LivewireAlert::title('Gagal')
+                                ->text('Jawaban tidak ditemukan untuk kriteria: ' . $criteria['nama'])
+                                ->error()
+                                ->show();
+                            return;
+                        }
+                        $jawaban->is_verified = false;
+                        $jawaban->is_submitted = false;
+                        $jawaban->save();
+                    }
+                }
+            }
+
+            DB::commit();
+            LivewireAlert::title('Berhasil')
+                ->text('Data penilaian berhasil dikembalikan.')
+                ->success()
+                ->show();
+            $this->_getDataQuestionaries();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            LivewireAlert::title('Gagal')
+                ->text('Terjadi kesalahan saat melakukan kembalikan: ' . $e->getMessage())
+                ->error()
+                ->show();
+            return;
+        }
+    }
+
+    function save()
+    {
+        $instance = $this->instance;
+        DB::beginTransaction();
+        try {
+            foreach ($this->dataPenilaian as $key => $penilaian) {
+                foreach ($penilaian['children'] as $keyChild => $child) {
+                    foreach ($child['criterias'] as $keyCriteria => $criteria) {
+                        // dd($criteria);
+                        $jawaban = Jawaban::where('ref_periode_id', $this->periode->id)
+                            ->where('criteria_id', $criteria['criteria_id'])
+                            ->where('instance_id', $instance)
+                            ->first();
+                        if (!$jawaban) {
+                            $jawaban = new Jawaban();
+                        }
+                        $jawaban->ref_periode_id = $this->periode->id;
+                        $jawaban->criteria_id = $criteria['criteria_id'];
+                        $jawaban->ref_jawaban_id = $criteria['ref_jawaban_id'];
+                        $jawaban->evaluator_id = null;
+                        $jawaban->skor = $criteria['jawaban'] ?? 0;
+                        $jawaban->catatan = $criteria['catatan'] ?? null;
+                        $jawaban->catatan_evaluator = $criteria['catatan_evaluator'] ?? null;
+                        $jawaban->instance_id = $instance;
+                        $jawaban->save();
+                    }
+                }
+            }
+
+            Instance::where('id', $instance)
+                ->update(['skor' => $this->totalSkor]);
+            DB::table('instance_skor')
+                ->updateOrInsert(
+                    ['periode_id' => $this->periode->id, 'instance_id' => $instance],
+                    ['skor' => $this->totalSkor]
+                );
+
+            DB::commit();
+            LivewireAlert::title('Berhasil')
+                ->text('Data penilaian berhasil disimpan.')
+                ->success()
+                ->show();
+
+            $this->_getDataQuestionaries();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+            LivewireAlert::title('Gagal')
+                ->text('Terjadi kesalahan saat menyimpan data penilaian: ' . $e->getMessage())
                 ->error()
                 ->show();
             return;

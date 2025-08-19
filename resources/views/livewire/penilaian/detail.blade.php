@@ -24,11 +24,11 @@
                                 </div>
                                 <div class="">
 
-                                    <span class="badge bg-grd-royal">
+                                    <span class="badge bg-grd-royal fs-6">
                                         {{ number_format($dataPenilaian[$key]['skor'],2) ?? 0 }}
                                     </span>
 
-                                    <div class="badge bg-grd-primary">
+                                    <div class="badge bg-grd-primary fs-6">
                                         {{ $questionary['bobot'] }}
                                     </div>
                                 </div>
@@ -59,10 +59,11 @@
                                         {{ $loop->iteration }}. {{ $subKomponen['nama'] }}
                                     </div>
                                     <div class="d-flex align-items-center gap-2">
-                                        <span class="badge bg-grd-royal">
-                                            Skor : {{ $dataPenilaian[$key]['children'][$keySub]['skor'] ?? 0 }}
+                                        <span class="badge bg-grd-royal fs-6">
+                                            Skor : {{ number_format($dataPenilaian[$key]['children'][$keySub]['skor'],
+                                            2) ?? 0 }}
                                         </span>
-                                        <span class="badge bg-grd-primary mr-2">
+                                        <span class="badge bg-grd-primary fs-6 mr-2">
                                             Bobot : {{ $subKomponen['bobot'] }}
                                         </span>
                                     </div>
@@ -111,7 +112,7 @@
                                                     <select class="form-select form-select-sm" @if($isSubmitted)
                                                         disabled @endif
                                                         wire:model.live="dataPenilaian.{{ $key }}.children.{{ $keySub }}.criterias.{{ $keyKriteria }}.jawaban">
-                                                        <option value="" hidden>Pilih Jawaban</option>
+                                                        <option value="" hidden>Jawaban</option>
                                                         @foreach($kriteria['jawaban']['values'] as $opsi)
                                                         <option value="{{ $opsi['nilai'] }}">
                                                             {{ $opsi['label'] }}
@@ -159,11 +160,12 @@
                                                             target="_blank" class="text-primary">
                                                             Lihat Evidence
                                                         </a>
+                                                        @if($isSubmitted)
                                                         <a href="#" class="text-danger"
-                                                            wire:click='confirmDeleteEvidence({{ $key }}, {{ $keySub }}, {{ $keyKriteria }})'
-                                                            @if($isSubmitted) disabled @endif>
+                                                            wire:click='confirmDeleteEvidence({{ $key }}, {{ $keySub }}, {{ $keyKriteria }})'>
                                                             <i class="bi bi-trash"></i>
                                                         </a>
+                                                        @endif
                                                     </div>
                                                     @endif
                                                     @else
@@ -187,6 +189,7 @@
                 @endforeach
             </div>
         </div>
+
         <div class="">
             <div class="d-flex flex-column flex-md-row justify-content-between gap-2 p-3">
                 <div class="d-flex align-items-center gap-2">
@@ -207,8 +210,8 @@
                     @endif
                 </div>
                 @if(count($dataQuestionaries) > 0)
-                <div class="d-flex align-items-center gap-2">
-                    <div class="btn btn-grd-primary text-white">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <div class="btn btn-grd-primary text-white" style="white-space: nowrap;">
                         Skor : {{ number_format($totalSkor, 2) }} / {{ $totalBobot }}
                     </div>
                     @if($isSubmitted)

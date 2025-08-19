@@ -24,11 +24,11 @@
                                 </div>
                                 <div class="">
 
-                                    <span class="badge bg-grd-royal">
+                                    <span class="badge bg-grd-royal fs-6">
                                         {{ number_format($dataPenilaian[$key]['skor'],2) ?? 0 }}
                                     </span>
 
-                                    <div class="badge bg-grd-primary">
+                                    <div class="badge bg-grd-primary fs-6">
                                         {{ $questionary['bobot'] }}
                                     </div>
                                 </div>
@@ -59,21 +59,11 @@
                                         {{ $loop->iteration }}. {{ $subKomponen['nama'] }}
                                     </div>
                                     <div class="d-flex align-items-center gap-2">
-                                        <span class="badge bg-grd-royal">
-                                            @php
-                                            $skor = collect($dataPenilaian[$key]['children'][$keySub]['criterias']);
-                                            $skor = $skor->sum(function ($item) {
-                                            return $item['jawaban'] ?? 0;
-                                            });
-
-                                            $skor = floatval($skor);
-                                            $skor1 = $subKomponen['bobot'] > 0 ? round(($skor / $subKomponen['bobot']) *
-                                            100, 2) : 0;
-
-                                            @endphp
-                                            Skor : {{ $skor }}
+                                        <span class="badge bg-grd-royal fs-6">
+                                            Skor : {{ number_format($dataPenilaian[$key]['children'][$keySub]['skor'],
+                                            2) ?? 0 }}
                                         </span>
-                                        <span class="badge bg-grd-primary mr-2">
+                                        <span class="badge bg-grd-primary fs-6 mr-2">
                                             Bobot : {{ $subKomponen['bobot'] }}
                                         </span>
                                     </div>
@@ -107,6 +97,9 @@
                                                 <th scope="col" class="text-white" width="200">
                                                     Evidence
                                                 </th>
+                                                <th scope="col" class="text-white" width="200">
+                                                    Catatan Evaluator
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -120,9 +113,8 @@
                                                 <td>
                                                     @if($kriteria['is_active'])
                                                     <select class="form-select form-select-sm"
-                                                        wire:model.live="dataPenilaian.{{ $key }}.children.{{ $keySub }}.criterias.{{ $keyKriteria }}.jawaban"
-                                                        disabled>
-                                                        <option value="" hidden>Pilih Jawaban</option>
+                                                        wire:model.live="dataPenilaian.{{ $key }}.children.{{ $keySub }}.criterias.{{ $keyKriteria }}.jawaban">
+                                                        <option value="" hidden>Jawaban</option>
                                                         @foreach($kriteria['jawaban']['values'] as $opsi)
                                                         <option value="{{ $opsi['nilai'] }}">
                                                             {{ $opsi['label'] }}
@@ -130,7 +122,7 @@
                                                         @endforeach
                                                     </select>
                                                     @else
-                                                    <span class="text-center text-danger">
+                                                    <span class="text-center text-danger" style="white-space: nowrap;">
                                                         Tidak Aktif
                                                     </span>
                                                     @endif
@@ -143,7 +135,7 @@
                                                         ?? '' }}
                                                     </div>
                                                     @else
-                                                    <span class="text-center text-danger">
+                                                    <span class="text-center text-danger" style="white-space: nowrap;">
                                                         Tidak Aktif
                                                     </span>
                                                     @endif
@@ -152,29 +144,34 @@
                                                     @if($kriteria['is_active'])
                                                     <textarea class="form-control"
                                                         wire:model="dataPenilaian.{{ $key }}.children.{{ $keySub }}.criterias.{{ $keyKriteria }}.catatan"
-                                                        disabled placeholder="Catatan..."></textarea>
+                                                        placeholder="Catatan..."></textarea>
                                                     @else
-                                                    <span class="text-center text-danger">
+                                                    <span class="text-center text-danger" style="white-space: nowrap;">
                                                         Tidak Aktif
                                                     </span>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if($kriteria['is_active'])
                                                     @if($dataPenilaian[$key]['children'][$keySub]['criterias'][$keyKriteria]['evidence'])
-                                                    <div class="mt-2">
+                                                    <div class="mt-2 d-flex align-items-center gap-2">
                                                         <a href="{{ asset($dataPenilaian[$key]['children'][$keySub]['criterias'][$keyKriteria]['evidence']) }}"
                                                             target="_blank" class="text-primary">
                                                             Lihat Evidence
                                                         </a>
                                                     </div>
                                                     @else
-                                                    <div class="text-warning">
-                                                        Tidak ada evidence
-                                                    </div>
+                                                    <span class="text-center text-danger" style="white-space: nowrap;">
+                                                        Tidak Ada Evidence
+                                                    </span>
                                                     @endif
+                                                </td>
+                                                <td>
+                                                    @if($kriteria['is_active'])
+                                                    <textarea class="form-control"
+                                                        wire:model="dataPenilaian.{{ $key }}.children.{{ $keySub }}.criterias.{{ $keyKriteria }}.catatan_evaluator"
+                                                        placeholder="Catatan Evaluator..."></textarea>
                                                     @else
-                                                    <span class="text-center text-danger">
+                                                    <span class="text-center text-danger" style="white-space: nowrap;">
                                                         Tidak Aktif
                                                     </span>
                                                     @endif
@@ -194,8 +191,10 @@
                 @endforeach
             </div>
         </div>
+
+
         <div class="">
-            <div class="d-flex justify-content-between p-3">
+            <div class="d-flex flex-column flex-md-row justify-content-between gap-2 p-3">
                 <div class="d-flex align-items-center gap-2">
                     <a href="{{ route('recap', ['instance' => $instance]) }}" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Kembali
@@ -214,23 +213,34 @@
 
                     @if($isVerified)
                     <div class="btn btn-grd-info text-white">
-                        Data sudah diverifikasi
+                        Data sudah dievaluasi
                     </div>
                     @endif
                     @endif
                 </div>
                 @if(count($dataQuestionaries) > 0)
-                <div class="d-flex align-items-center gap-2">
-                    <div class="btn btn-grd-primary text-white">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <div class="btn btn-grd-primary text-white" style="white-space: nowrap;">
                         Skor : {{ number_format($totalSkor, 2) }} / {{ number_format($totalBobot, 2) }}
                     </div>
-                    @if($isSubmitted)
+                    @if($isSubmitted && !$isVerified)
+                    <button type="button" class="btn btn-secondary d-flex align-items-center gap-1"
+                        wire:click='confirmReset'>
+                        <i class="material-icons-outlined me-1">replay</i>
+                        Reset
+                    </button>
                     <button type="button" class="btn btn-success d-flex align-items-center gap-1"
                         wire:click='confirmVerify'>
-                        <i class="material-icons-outlined">add_task</i>
-                        Verifikasi
+                        <i class="material-icons-outlined me-1">add_task</i>
+                        Evaluasi
+                    </button>
+                    <button type="button" class="btn btn-primary" wire:click='save'
+                        wire:loading.attr="disabled">
+                        <i class="bi bi-save me-1"></i>
+                        Simpan
                     </button>
                     @endif
+
                 </div>
                 @endif
             </div>
