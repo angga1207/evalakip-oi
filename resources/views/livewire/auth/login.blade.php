@@ -45,7 +45,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-12">
+                    {{-- <div class="col-12">
                         <div class="d-flex flex-column justify-content-center rounded mb-3">
                             <div class="captcha-container rounded">
                                 <div class="captcha-wrapper">
@@ -78,7 +78,7 @@
                             {{ $message }}
                         </div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="col-md-6">
                         <div class="form-check form-switch">

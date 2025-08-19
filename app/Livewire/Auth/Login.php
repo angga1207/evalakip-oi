@@ -10,7 +10,7 @@ use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
 class Login extends Component
 {
-    public $username, $password, $remember = true;
+    public $username, $password, $remember = true, $captcha;
     // 198602022015032002
 
     public function render()
@@ -35,7 +35,7 @@ class Login extends Component
             return;
         }
 
-        if ($userRole->role_id === 1) {
+        if (in_array($userRole->role_id, [1, 3])) {
             $this->validate([
                 'username' => 'required|alpha_num',
                 'password' => 'required|string',
@@ -64,15 +64,14 @@ class Login extends Component
             $this->validate([
                 'username' => 'required|alpha_num',
                 'password' => 'required|string',
-                'captcha' => 'required|captcha'
+                // 'captcha' => 'required|captcha'
             ], [
                 'captcha.required' => 'Captcha tidak boleh kosong',
                 'captcha.captcha' => 'Captcha tidak cocok'
-
             ], [
                 'username' => 'NIP',
                 'password' => 'Kata Sandi',
-                'captcha' => 'Captcha'
+                // 'captcha' => 'Captcha'
             ]);
 
             $uri = 'https://semesta.oganilirkab.go.id/api/auth-user-evalakip';
