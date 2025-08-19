@@ -26,7 +26,7 @@ class Login extends Component
     {
         $this->validate([
             'username' => 'required|alpha_num',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
         ], [], [
             'username' => 'NIP',
             'password' => 'Kata Sandi',
