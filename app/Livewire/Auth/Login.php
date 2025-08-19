@@ -37,7 +37,7 @@ class Login extends Component
 
         if (in_array($userRole->role_id, [1, 3])) {
             $this->validate([
-                'username' => 'required|alpha_num',
+                'username' => 'required|string',
                 'password' => 'required|string',
             ], [], [
                 'username' => 'NIP',
@@ -62,7 +62,7 @@ class Login extends Component
             }
         } else {
             $this->validate([
-                'username' => 'required|alpha_num',
+                'username' => 'required|string',
                 'password' => 'required|string',
                 // 'captcha' => 'required|captcha'
             ], [
