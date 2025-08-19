@@ -47,7 +47,7 @@
                                 <td class="text-center" style="white-space: nowrap;">
                                     {{ $data->Role->name ?? '-' }}
                                 </td>
-                                <td class="text-start" style="white-space: nowrap;">
+                                <td class="text-start">
                                     {{ $data->Instance->name ?? '' }}
                                 </td>
                                 <td>
