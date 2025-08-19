@@ -33,7 +33,7 @@ class Detail extends Component
     public function render()
     {
         $users = [];
-        $users = User::whereIn('role_id', [2, 4])
+        $users = User::whereIn('role_id', [2, 3, 4])
             ->where('instance_id', $this->instance['id'])
             ->get();
         $units = Unit::orderBy('name')

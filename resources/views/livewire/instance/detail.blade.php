@@ -231,17 +231,20 @@
                                                 @forelse($semestaUsers as $semUser)
                                                 <tr>
                                                     <td>
-                                                        <div wire:ignore class="d-flex">
+                                                        <div class="d-flex">
                                                             @php
                                                             $defaultImg = 'https://ui-avatars.com/api/?name=' .
                                                             urlencode($semUser['nama_lengkap'] ?? 'User') .
-                                                            '&size=60'
+                                                            '&size=40'
                                                             @endphp
-                                                            <img src="{{ asset($semUser['foto_pegawai']) }}" width="40"
-                                                                height="40" class="rounded-circle raised bg-white"
-                                                                style="object-fit: cover;"
-                                                                alt="{{ $semUser['nama_lengkap'] }}"
-                                                                onerror="this.onerror=null;this.src='{{ asset($defaultImg) }}';">
+                                                            <div>
+                                                                <img src="{{ asset($semUser['foto_pegawai']) }}"
+                                                                    width="40" height="40"
+                                                                    class="rounded-circle raised bg-white"
+                                                                    style="object-fit: cover; width:40px; height:40px;"
+                                                                    alt="{{ $semUser['nama_lengkap'] }}"
+                                                                    onerror="this.onerror=null;this.src='{{ asset($defaultImg) }}';">
+                                                            </div>
                                                             <div class="flex-grow-1 ms-2">
                                                                 <h6 class="mb-0">
                                                                     {{ $semUser['nama_lengkap'] }}
@@ -256,6 +259,15 @@
                                                         {{ $semUser['jabatan'] ?? '-' }}
                                                     </td>
                                                     <td>
+                                                        {{-- if $semUser['nip'] === any $users username --}}
+                                                        @if($users->contains('username', $semUser['nip']))
+                                                        <button type="button"
+                                                            class="btn btn-success px-1 btn-sm d-flex gap-1"
+                                                            style="white-space: nowrap;">
+                                                            <i class="bi bi-link-45deg"></i>
+                                                            Terkait
+                                                        </button>
+                                                        @else
                                                         <button type="button"
                                                             class="btn btn-outline-primary px-1 btn-sm d-flex gap-1"
                                                             wire:click.prevent="linkUser({{ $semUser['id'] }})"
@@ -263,6 +275,7 @@
                                                             <i class="bi bi-link"></i>
                                                             Tautkan
                                                         </button>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 @empty

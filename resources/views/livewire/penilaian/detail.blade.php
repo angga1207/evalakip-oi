@@ -85,7 +85,7 @@
                                                 <th scope="col" class="text-white" width="200">
                                                     Penjelasan Kriteria
                                                 </th>
-                                                <th scope="col" class="text-white" width="50">
+                                                <th scope="col" class="text-white" width="80">
                                                     Jawaban
                                                 </th>
                                                 <th scope="col" class="text-white" width="100">
@@ -110,9 +110,11 @@
                                                 <td>
                                                     @if($kriteria['is_active'])
                                                     <select class="form-select form-select-sm" @if($isSubmitted)
-                                                        disabled @endif
+                                                        disabled @endif style="width:100px"
                                                         wire:model.live="dataPenilaian.{{ $key }}.children.{{ $keySub }}.criterias.{{ $keyKriteria }}.jawaban">
-                                                        <option value="" hidden>Jawaban</option>
+                                                        <option value="" hidden>
+                                                            Pilih
+                                                        </option>
                                                         @foreach($kriteria['jawaban']['values'] as $opsi)
                                                         <option value="{{ $opsi['nilai'] }}">
                                                             {{ $opsi['label'] }}

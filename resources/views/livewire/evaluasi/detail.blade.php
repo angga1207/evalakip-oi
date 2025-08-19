@@ -85,7 +85,7 @@
                                                 <th scope="col" class="text-white" width="200">
                                                     Penjelasan Kriteria
                                                 </th>
-                                                <th scope="col" class="text-white" width="50">
+                                                <th scope="col" class="text-white" width="80">
                                                     Jawaban
                                                 </th>
                                                 <th scope="col" class="text-white" width="100">
@@ -112,9 +112,11 @@
                                                 <td>{{ $kriteria['penjelasan'] }}</td>
                                                 <td>
                                                     @if($kriteria['is_active'])
-                                                    <select class="form-select form-select-sm"
+                                                    <select class="form-select form-select-sm" style="width:100px"
                                                         wire:model.live="dataPenilaian.{{ $key }}.children.{{ $keySub }}.criterias.{{ $keyKriteria }}.jawaban">
-                                                        <option value="" hidden>Jawaban</option>
+                                                        <option value="" hidden>
+                                                            Pilih
+                                                        </option>
                                                         @foreach($kriteria['jawaban']['values'] as $opsi)
                                                         <option value="{{ $opsi['nilai'] }}">
                                                             {{ $opsi['label'] }}
@@ -234,8 +236,7 @@
                         <i class="material-icons-outlined me-1">add_task</i>
                         Evaluasi
                     </button>
-                    <button type="button" class="btn btn-primary" wire:click='save'
-                        wire:loading.attr="disabled">
+                    <button type="button" class="btn btn-primary" wire:click='save' wire:loading.attr="disabled">
                         <i class="bi bi-save me-1"></i>
                         Simpan
                     </button>
