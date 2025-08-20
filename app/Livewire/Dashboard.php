@@ -11,6 +11,7 @@ use Livewire\Component;
 class Dashboard extends Component
 {
     public $user = null, $roleId = null, $instanceId = null;
+    public $search = '';
 
     function mount()
     {
@@ -22,7 +23,8 @@ class Dashboard extends Component
     public function render()
     {
         if (in_array($this->roleId, [1])) {
-            $arrInstance = Instance::orderBy('unit_id', 'asc')
+            $arrInstance = Instance::search($this->search)
+                ->orderBy('unit_id', 'asc')
                 ->get();
 
             $totalSkor = 0;
@@ -57,7 +59,8 @@ class Dashboard extends Component
 
         if (in_array($this->roleId, [3])) {
             $myInstanceIds = $this->user->instances->pluck('id')->toArray();
-            $arrInstance = Instance::whereIn('id', $myInstanceIds)
+            $arrInstance = Instance::search($this->search)
+                ->whereIn('id', $myInstanceIds)
                 ->orderBy('unit_id', 'asc')
                 ->get();
 

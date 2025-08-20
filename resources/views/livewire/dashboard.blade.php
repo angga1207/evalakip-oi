@@ -58,10 +58,21 @@ use App\Models\Data\Grade;
         </div>
 
         <div class="col-md-12">
-            <div class="">
+            <div class="d-flex flex-column flex-md-row justify-content-md-between">
                 <h4 class="mb-4">
                     Instansi yang dinilai
                 </h4>
+
+                <div class="">
+
+                    <div class="position-relative">
+                        <input class="form-control rounded-5 ps-5 search-control d-lg-block d-none" type="search"
+                            placeholder="Pencarian...." wire:model.live='search'>
+                        <span
+                            class="material-icons-outlined position-absolute d-lg-block d-none ms-3 translate-middle-y start-0 top-50">search</span>
+                    </div>
+
+                </div>
             </div>
             <div class="row g-4">
                 @foreach($arrInstance as $instance)
