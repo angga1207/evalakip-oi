@@ -20,7 +20,7 @@
                         </tr>
                         <tr class="align-middle bg-info">
                             <th class="border text-center text-dark">
-                                1 (20%) Keberandaan
+                                1 (20%) Keberadaan
                             </th>
                             <th class="border text-center text-dark">
                                 2 (30%) Kualitas

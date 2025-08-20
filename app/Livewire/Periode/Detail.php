@@ -88,13 +88,18 @@ class Detail extends Component
             if ($this->data['is_active'] == 1) {
                 Periode::where('id', '!=', $data->id)->update(['is_active' => false]);
             } else {
-                // make latest created periode as active
-                Periode::where('id', '!=', $data->id)->latest()->first()->update(['is_active' => true]);
+                Periode::where('id', '!=', 0)->update(['is_active' => false]);
+                Periode::where('id', '!=', $data->id)
+                    ->latest('label')
+                    ->first()
+                    ->update(['is_active' => true]);
             }
 
             LivewireAlert::title('Berhasil')
                 ->text('Periode berhasil diperbarui.')
                 ->success()
+                ->toast()
+                ->position('top-end')
                 ->show();
             // return redirect()->route('periode.index');
         }

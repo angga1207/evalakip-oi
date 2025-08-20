@@ -13,6 +13,20 @@ use App\Models\Data\Grade;
                 </h4>
             </div>
 
+            <div class="">
+                <div class="d-flex align-items-center justify-content-center gap-2">
+                    <small>
+                        Legenda :
+                    </small>
+                    <span class="badge bg-grd-royal">
+                        SKOR
+                    </span>
+                    <span class="badge bg-grd-primary mr-2">
+                        BOBOT
+                    </span>
+                </div>
+            </div>
+
             <ul class="list-group list-group-flush" style="flex: 1; overflow-y: auto; max-height: 490px;">
                 @foreach($datas as $keyComponent => $data)
                 <li class="list-group-item px-2" style="background-color: #cdcdcd;">

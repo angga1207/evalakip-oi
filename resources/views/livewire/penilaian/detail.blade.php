@@ -4,6 +4,21 @@
 <div>
     <div wire:init='_getDataQuestionaries'></div>
     <form class="card" wire:submit.prevent='save'>
+
+        <div class="mt-3">
+            <div class="d-flex align-items-center justify-content-center gap-2">
+                <small>
+                    Legenda :
+                </small>
+                <span class="badge bg-grd-royal">
+                    SKOR
+                </span>
+                <span class="badge bg-grd-primary mr-2">
+                    BOBOT
+                </span>
+            </div>
+        </div>
+
         <div x-data="{ tab: 'tab-0' }" class="card-body" style="overflow-y: auto; height: calc(100vh - 300px);">
 
             <ul class="nav nav-tabs nav-primary flex-nowrap" role="tablist"
@@ -29,7 +44,7 @@
                                     </span>
 
                                     <div class="badge bg-grd-primary fs-6">
-                                        {{ $questionary['bobot'] }}
+                                        {{ number_format($questionary['bobot'],2) }}
                                     </div>
                                 </div>
                             </div>
@@ -60,11 +75,11 @@
                                     </div>
                                     <div class="d-flex align-items-center gap-2">
                                         <span class="badge bg-grd-royal fs-6">
-                                            Skor : {{ number_format($dataPenilaian[$key]['children'][$keySub]['skor'],
+                                            {{ number_format($dataPenilaian[$key]['children'][$keySub]['skor'],
                                             2) ?? 0 }}
                                         </span>
                                         <span class="badge bg-grd-primary fs-6 mr-2">
-                                            Bobot : {{ $subKomponen['bobot'] }}
+                                            {{ number_format($subKomponen['bobot'],2) }}
                                         </span>
                                     </div>
                                 </button>
@@ -213,7 +228,7 @@
                 </div>
                 @if(count($dataQuestionaries) > 0)
                 <div class="d-flex align-items-center flex-wrap gap-2">
-                    <div class="btn btn-grd-primary text-white" style="white-space: nowrap;">
+                    <div class="btn btn-grd-royal text-white" style="white-space: nowrap;">
                         Skor : {{ number_format($totalSkor, 2) }} / {{ $totalBobot }}
                     </div>
                     @if($isSubmitted)
