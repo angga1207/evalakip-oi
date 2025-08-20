@@ -136,10 +136,10 @@
                                             <tr>
                                                 <td>
                                                     <div wire:ignore class="d-flex">
-                                                        <img src="{{ asset($user['image']) }}" width="40" height="40"
+                                                        {{-- <img src="{{ asset($user['image']) }}" width="40" height="40"
                                                             class="rounded-circle raised bg-white"
                                                             style="object-fit: cover;" alt="{{ $user['name'] }}"
-                                                            onerror="this.onerror=null;this.src='{{ asset($user->getImageIfError()) }}';">
+                                                            onerror="this.onerror=null;this.src='{{ asset($user->getImageIfError()) }}';"> --}}
 
                                                         <div class="flex-grow-1 ms-2">
                                                             <h6 class="mb-0">

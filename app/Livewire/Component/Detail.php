@@ -36,10 +36,12 @@ class Detail extends Component
             $this->data = $this->data->toArray();
         }
 
-        if ($this->parent_id) {
-            $this->data['parent_id'] = $this->parent_id;
-        } else {
-            $this->data['parent_id'] = null;
+        if (!$id) {
+            if ($this->parent_id) {
+                $this->data['parent_id'] = $this->parent_id;
+            } else {
+                $this->data['parent_id'] = null;
+            }
         }
     }
 
