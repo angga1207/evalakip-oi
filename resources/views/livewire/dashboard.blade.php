@@ -100,8 +100,7 @@ use App\Models\Data\Grade;
                                     <div class="">
                                         @php
                                         $grade = Grade::where('nilai', '<=', $instance->GetSkor() ?? 0)
-                                            ->orderBy('nilai',
-                                            'desc')
+                                            ->orderBy('nilai', 'desc')
                                             ->first();
                                             @endphp
                                             <span class="badge border fs-4">

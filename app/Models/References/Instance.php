@@ -3,6 +3,7 @@
 namespace App\Models\References;
 
 use App\Searchable;
+use App\Models\Data\Grade;
 use App\Models\Data\Jawaban;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -64,6 +65,15 @@ class Instance extends Model
             ->value('skor');
 
         return $skor;
+    }
+
+    function GetGrade()
+    {
+        $skor = $this->GetSkor() ?? 0;
+        $grade = Grade::where('nilai', '<=', $skor)
+            ->orderBy('nilai', 'desc')
+            ->first();
+        return $grade ? $grade->predikat : 'E';
     }
 
     function CalculateSkor($periodeId = null)

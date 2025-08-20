@@ -81,6 +81,30 @@
                 </li>
                 @endif --}}
 
+                @if(in_array($auth->role_id, [1,3]))
+                <li class="menu-label">
+                    Report
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon">
+                            <i class="material-icons-outlined">receipt</i>
+                        </div>
+                        <div class="menu-title">
+                            Report
+                        </div>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ route('report.index') }}">
+                                <i class="material-icons-outlined">arrow_right</i>
+                                Laporan
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+
                 @if($auth->role_id === 1)
                 <li class="menu-label">
                     Referensi
@@ -127,6 +151,7 @@
                         </li>
                     </ul>
                 </li>
+
                 <li class="menu-label">
                     Manajemen Pengguna
                 </li>

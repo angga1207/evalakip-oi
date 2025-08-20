@@ -23,6 +23,10 @@ Route::middleware(['auth'])->group(function () {
         // Evaluasi
         Route::get('/evaluasi', App\Livewire\Evaluasi\Detail::class)->name('evaluasi');
         Route::get('/recap', App\Livewire\Recap\Detail::class)->name('recap');
+
+        // Report
+        Route::get('/report', App\Livewire\Report\Index::class)->name('report.index');
+        Route::get('/report/{id}', App\Livewire\Report\Detail::class)->name('report.detail');
     });
 
     Route::middleware(['SuperAdminRoutes'])->group(function () {
