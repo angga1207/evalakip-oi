@@ -48,7 +48,18 @@
                                     {{ $data->Role->name ?? '-' }}
                                 </td>
                                 <td class="text-start">
-                                    {{ $data->Instance->name ?? '' }}
+                                    <div>
+                                        {{ $data->Instance->name ?? '' }}
+                                    </div>
+                                    @if($data->Instances->count() > 0)
+                                    <div class="mt-1">
+                                        @foreach($data->Instances as $inst)
+                                        <span class="badge bg-grd-primary">
+                                            {{ $inst->alias }}
+                                        </span>
+                                        @endforeach
+                                    </div>
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="d-flex gap-2">
