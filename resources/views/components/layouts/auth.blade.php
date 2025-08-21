@@ -34,7 +34,8 @@
 
     <!--authentication-->
     <div class="auth-basic-wrapper d-flex align-items-center justify-content-center"
-        style="background: url('{{ asset('assets/bg-login.png') }}'); background-size: cover; background-position: center;">
+        style="background: url('{{ asset('assets/bg-login.jpg') }}'); background-size: cover; background-position: center; background">
+        <div style="width:100%; height:100%; position: fixed; background-color: rgba(0, 0, 0, 0.3)"></div>
         <div class="container-fluid my-5 my-lg-0">
             <div class="row">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto">

@@ -99,6 +99,13 @@
                             </button>
                         </div>
                     </div>
+
+                    <div class="col-12">
+                        <p class="mb-0 text-center">
+                            © {{ date('Y') == 2025 ? 2025 : '2025 - ' . date('Y') }}.
+                            Diskomifo Kabupaten Ogan Ilir.
+                        </p>
+                    </div>
                 </form>
             </div>
 

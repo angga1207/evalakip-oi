@@ -59,7 +59,7 @@
 
     <!--start footer-->
     {{-- <footer class="page-footer">
-        <p class="mb-0">Copyright © {{ date('Y') == 2025 ? 2025 : '2025 - ' . date('Y') }}. All right reserved.</p>
+        <p class="mb-0"> © {{ date('Y') == 2025 ? 2025 : '2025 - ' . date('Y') }}. All right reserved.</p>
     </footer> --}}
     <!--end footer-->
 
