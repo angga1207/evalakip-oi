@@ -38,9 +38,9 @@ class Detail extends Component
             $nilai2 = 0;
             $nilai3 = 0;
 
-            $criteriaIds1 = $komponent->Children->first()->Criterias->where('is_active', true)->pluck('id')->toArray();
-            $criteriaIds2 = $komponent->Children->skip(1)->first()->Criterias->where('is_active', true)->pluck('id')->toArray();
-            $criteriaIds3 = $komponent->Children->skip(2)->first()->Criterias->where('is_active', true)->pluck('id')->toArray();
+            $criteriaIds1 = $komponent->Children->first()->Criterias ? $komponent->Children->first()->Criterias->where('is_active', true)->pluck('id')->toArray() : [];
+            $criteriaIds2 = $komponent->Children->skip(1)->first()->Criterias ? $komponent->Children->skip(1)->first()->Criterias->where('is_active', true)->pluck('id')->toArray() : [];
+            $criteriaIds3 = $komponent->Children->skip(2)->first()->Criterias ? $komponent->Children->skip(2)->first()->Criterias->where('is_active', true)->pluck('id')->toArray() : [];
 
             $jawaban1 = Jawaban::where('ref_periode_id', $this->periode->id)
                 ->where('instance_id', $this->instance->id)
