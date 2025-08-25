@@ -88,31 +88,31 @@
                                 class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                                 data-bs-parent="#accordionFlush{{ $key }}" style="">
                                 <div class="pb-4 pt-2 table-responsive">
-                                    <table class="table mb-0 align-middle">
+                                    <table class="table mb-0 align-middle" style="min-width:100%">
                                         <thead class="bg-dark text-white">
                                             <tr>
                                                 <th scope="col" class="text-white" width="10">
                                                     #
                                                 </th>
-                                                <th scope="col" class="text-white" width="200">
+                                                <th scope="col" class="text-white" style="min-width:200px">
                                                     Nama Kriteria
                                                 </th>
-                                                <th scope="col" class="text-white" width="200">
+                                                <th scope="col" class="text-white" style="min-width:200px">
                                                     Penjelasan Kriteria
                                                 </th>
-                                                <th scope="col" class="text-white" width="80">
+                                                <th scope="col" class="text-white" style="min-width:80px">
                                                     Jawaban
                                                 </th>
-                                                <th scope="col" class="text-white" width="100">
+                                                <th scope="col" class="text-white" style="min-width:100px">
                                                     Skor
                                                 </th>
-                                                <th scope="col" class="text-white" width="200">
+                                                <th scope="col" class="text-white" style="min-width:200px">
                                                     Catatan
                                                 </th>
-                                                <th scope="col" class="text-white" width="200">
+                                                <th scope="col" class="text-white" style="width:200px">
                                                     Evidence
                                                 </th>
-                                                <th scope="col" class="text-white" width="200">
+                                                <th scope="col" class="text-white" style="min-width:200px">
                                                     Catatan Evaluator
                                                 </th>
                                             </tr>
@@ -170,11 +170,24 @@
                                                 </td>
                                                 <td>
                                                     @if($dataPenilaian[$key]['children'][$keySub]['criterias'][$keyKriteria]['evidence'])
-                                                    <div class="mt-2 d-flex align-items-center gap-2">
+                                                    {{-- <div class="mt-2 d-flex align-items-center gap-2">
                                                         <a href="{{ asset($dataPenilaian[$key]['children'][$keySub]['criterias'][$keyKriteria]['evidence']) }}"
                                                             target="_blank" class="text-primary">
                                                             Lihat Evidence
-                                                        </a>
+                                                        </a> --}}
+
+                                                        <div class="">
+                                                            @php
+                                                            // convert string that there is url into clickable link
+                                                            $evidence =
+                                                            $dataPenilaian[$key]['children'][$keySub]['criterias'][$keyKriteria]['evidence'];
+                                                            $evidence = preg_replace('/(https?:\/\/[^\s]+)/', '<a
+                                                                href="$1" target="_blank">$1</a>',
+                                                            $evidence
+                                                            );
+                                                            @endphp
+                                                            <div style="white-space: pre-line">{!! $evidence !!}</div>
+                                                        </div>
                                                     </div>
                                                     @else
                                                     <span class="text-center text-danger" style="white-space: nowrap;">
@@ -241,11 +254,11 @@
                         Skor : {{ number_format($totalSkor, 2) }} / {{ number_format($totalBobot, 2) }}
                     </div>
                     @if($isSubmitted && !$isVerified)
-                    <button type="button" class="btn btn-secondary d-flex align-items-center gap-1"
+                    {{-- <button type="button" class="btn btn-secondary d-flex align-items-center gap-1"
                         wire:click='confirmReset'>
                         <i class="material-icons-outlined me-1">replay</i>
                         Reset
-                    </button>
+                    </button> --}}
                     <button type="button" class="btn btn-success d-flex align-items-center gap-1"
                         wire:click='confirmVerify'>
                         <i class="material-icons-outlined me-1">add_task</i>

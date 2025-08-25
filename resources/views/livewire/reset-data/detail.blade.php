@@ -6,8 +6,11 @@ use Carbon\Carbon;
 <div>
     <div class="card w-100 rounded-4">
         <div class="card-body">
-            <h5 class="card-title">Daftar Kriteria</h5>
-            <p class="card-text">Berikut adalah daftar kriteria yang tersedia.</p>
+            <h5 class="card-title">
+                Reset Data {{ $type == 'penilaian' ? 'Penilaian' : 'Evaluasi' }}
+            </h5>
+            <p class="card-text">Berikut adalah daftar Instansi yang ingin direset {{ $type == 'penilaian' ?
+                'Penilaiannya' : 'Evaluasinya' }}</p>
 
 
             <div wire:ignore class="table-responsive">
@@ -18,60 +21,59 @@ use Carbon\Carbon;
                                 No
                             </th>
                             <th class="text-center" width="200">
-                                Komponen
-                            </th>
-                            <th class="text-center" width="200">
-                                Nama Kriteria
+                                Nama Instansi
                             </th>
                             <th class="text-center" width="100">
-                                Status Nilai
+                                Status Penilaian
                             </th>
-                            <th class="text-center" width="100">
-                                Pilihan Jawaban
-                            </th>
-                            <th class="no-export text-center" width="100">
+                            <th class="no-export text-center" width="50">
                                 Opsi
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($datas as $index => $data)
+                        @php
+                        $penilaian = collect($data->Penilaian())->first();
+                        @endphp
                         <tr wire:key="data-{{ $data->id }}">
                             <td>
                                 {{ $loop->iteration }}
                             </td>
                             <td>
                                 <h6 class="mb-0">
-                                    {{ $data->Component->Parent->nama ?? '' }}
+                                    {{ $data->name ?? '' }}
                                 </h6>
                                 <div class="mb-0">
-                                    {{ $data->Component->nama ?? '' }}
+                                    {{ $data->code ?? '' }}
                                 </div>
                             </td>
                             <td class="text-center">
-                                <div class="mb-0">
-                                    {{ $data->nama }}
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <span class="badge bg-{{ $data->is_active == 1 ? 'success' : 'danger' }}">
-                                    {{ $data->is_active == 1 ? 'Dinilai' : 'Tidak Dinilai' }}
+                                @if($penilaian)
+                                @if($penilaian['is_submitted'] == true && $penilaian['is_verified'] == false)
+                                <span class="badge bg-success">
+                                    Sudah Disubmit
                                 </span>
-                            </td>
-                            <td class="text-center">
-                                <div class="mb-0">
-                                    {{ $data->Answer->label ?? '' }}
-                                </div>
+                                @elseif($penilaian['is_submitted'] == false && $penilaian['is_verified'] == false)
+                                <span class="badge bg-warning text-muted">
+                                    Belum Disubmit
+                                </span>
+                                @elseif($penilaian['is_submitted'] == true && $penilaian['is_verified'] == true)
+                                <span class="badge bg-success">
+                                    Sudah Diverifikasi
+                                </span>
+                                @endif
+                                @else
+                                <span class="badge bg-danger">
+                                    Belum Ada Penilaian
+                                </span>
+                                @endif
                             </td>
                             <td>
-                                <div class="d-flex gap-2">
-                                    <a href="{{ route('criterias.edit', $data->id) }}"
-                                        class="btn btn-primary btn-sm px-2 py-1">
-                                        <i class="material-icons-outlined" style="font-size: 12px;">edit</i>
-                                    </a>
-                                    <button class="btn btn-danger btn-sm px-2 py-1"
-                                        wire:click="confirmDelete({{ $data->id }})">
-                                        <i class="material-icons-outlined" style="font-size: 12px;">delete</i>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <button class="btn btn-secondary btn-sm px-2 py-1"
+                                        wire:click="confirmReset({{ $data->id }})">
+                                        <i class="material-icons-outlined" style="font-size: 12px;">restart_alt</i>
                                     </button>
                                 </div>
                             </td>
@@ -157,21 +159,6 @@ use Carbon\Carbon;
 			table.buttons().container()
 				.appendTo( '#myDataTable_wrapper .col-md-6:eq(0)' );
 
-
-            $('#myDataTable_filter').append(
-                '<select id="filterSubComponent" class="form-select form-select-sm ms-2" style="width: 250px; display: inline-block;">' +
-                '<option value="">Semua Sub Komponen</option>' +
-                '@foreach($subComponents as $com)' +
-                '<option value="{{ $com->nama }}">{{ $com->nama }}</option>' +
-                '@endforeach' +
-                '</select>'
-            );
-
-            // Filter table by sub component
-            $('#filterSubComponent').on('change', function() {
-                var subComponentId = $(this).val();
-                table.column(1).search(subComponentId).draw();
-            });
         });
     </script>
     @endpush

@@ -106,6 +106,7 @@
                 @endif
 
                 @if($auth->role_id === 1)
+
                 <li class="menu-label">
                     Referensi
                 </li>
@@ -147,6 +148,34 @@
                             <a href="{{ route('import') }}">
                                 <i class="material-icons-outlined">arrow_right</i>
                                 Import
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="menu-label">
+                    Reset Data
+                </li>
+                <li>
+                    <a href="javascript:;" class="has-arrow">
+                        <div class="parent-icon">
+                            <i class="material-icons-outlined">restart_alt</i>
+                        </div>
+                        <div class="menu-title">
+                            Reset Data
+                        </div>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ route('reset-data', ['type' => 'penilaian']) }}">
+                                <i class="material-icons-outlined">arrow_right</i>
+                                Reset Penilaian
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('reset-data', ['type' => 'evaluasi']) }}">
+                                <i class="material-icons-outlined">arrow_right</i>
+                                Reset Evaluasi
                             </a>
                         </li>
                     </ul>

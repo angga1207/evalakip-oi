@@ -194,21 +194,23 @@ class Detail extends Component
                         // $jawaban->evidence = $criteria['evidence'] ?? null;
 
                         // dd($criteria['new_evidence']->getClientOriginalName());
-                        if ($criteria['new_evidence']) {
-                            $fileName = str()->uuid() . '.' . $criteria['new_evidence']->extension();
-                            // $fileName = str()->uuid() . $criteria['new_evidence']->getClientOriginalName();
-                            // $upload = $criteria['new_evidence']->storeAs('public/evidences', $fileName, 'public');
-                            // $jawaban->evidence = 'storage/public/evidences/' . $fileName;
+                        // if ($criteria['new_evidence']) {
+                        //     $fileName = str()->uuid() . '.' . $criteria['new_evidence']->extension();
+                        //     // $fileName = str()->uuid() . $criteria['new_evidence']->getClientOriginalName();
+                        //     // $upload = $criteria['new_evidence']->storeAs('public/evidences', $fileName, 'public');
+                        //     // $jawaban->evidence = 'storage/public/evidences/' . $fileName;
 
-                            $jawaban->evidence = $this->_UploadEvidenceToDrive($criteria['new_evidence'], $user);
-                            // if (!$jawaban->evidence) {
-                            //     LivewireAlert::title('Gagal')
-                            //         ->text('Gagal mengunggah bukti: ' . $criteria['new_evidence']->getClientOriginalName())
-                            //         ->error()
-                            //         ->show();
-                            //     return;
-                            // }
-                        }
+                        //     $jawaban->evidence = $this->_UploadEvidenceToDrive($criteria['new_evidence'], $user);
+                        //     // if (!$jawaban->evidence) {
+                        //     //     LivewireAlert::title('Gagal')
+                        //     //         ->text('Gagal mengunggah bukti: ' . $criteria['new_evidence']->getClientOriginalName())
+                        //     //         ->error()
+                        //     //         ->show();
+                        //     //     return;
+                        //     // }
+                        // }
+
+                        $jawaban->evidence = $criteria['evidence'] ?? null;
 
                         $jawaban->instance_id = $user->instance_id;
                         $jawaban->is_active = true;

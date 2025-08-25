@@ -168,7 +168,7 @@
                                                 </td>
                                                 <td>
                                                     @if($kriteria['is_active'])
-                                                    <input type="file" class="form-control form-control-sm"
+                                                    {{-- <input type="file" class="form-control form-control-sm"
                                                         wire:model="dataPenilaian.{{ $key }}.children.{{ $keySub }}.criterias.{{ $keyKriteria }}.new_evidence"
                                                         @if($isSubmitted) disabled @endif placeholder="Evidence...">
                                                     @if($dataPenilaian[$key]['children'][$keySub]['criterias'][$keyKriteria]['evidence'])
@@ -184,7 +184,11 @@
                                                         </a>
                                                         @endif
                                                     </div>
-                                                    @endif
+                                                    @endif --}}
+
+                                                    <textarea class="form-control" @if($isSubmitted) disabled @endif
+                                                        wire:model="dataPenilaian.{{ $key }}.children.{{ $keySub }}.criterias.{{ $keyKriteria }}.evidence"
+                                                        placeholder="Masukkan Evidence..."></textarea>
                                                     @else
                                                     <span class="text-center text-danger">
                                                         Tidak Aktif

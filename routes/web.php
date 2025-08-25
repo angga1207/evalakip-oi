@@ -57,6 +57,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/grades/create', App\Livewire\Grade\Detail::class)->name('grades.create');
         Route::get('/grades/edit/{id}', App\Livewire\Grade\Detail::class)->name('grades.edit');
 
+        // Reset Data
+        Route::get('/reset-data', App\Livewire\ResetData\Detail::class)->name('reset-data');
+
         // Import
         Route::get('/import', App\Livewire\Import\Detail::class)->name('import');
 

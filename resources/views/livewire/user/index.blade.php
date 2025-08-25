@@ -63,8 +63,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                        {{-- 'local | production' --}}
-                                        @if(auth()->user()->id === 1 && env('APP_ENV') === 'local')
+                                        @if(auth()->user()->id === 1)
                                         <button class="btn btn-secondary btn-sm"
                                             wire:click.prevent="impersonate({{ $data->id }})">
                                             <i class="material-icons-outlined">assignment_ind</i>
