@@ -31,6 +31,26 @@ use App\Models\Data\Grade;
                                         {{ auth()->user()->Role->name ?? '' }}
                                         <i class="ti ti-arrow-up-right fs-5 lh-base text-success"></i>
                                     </h4>
+
+                                    @if(auth()->user()->role_id === 1)
+                                    <a href="{{ asset('Manual-Books/ManualBookAdmin.pdf') }}" target="_blank"
+                                        class="d-flex align-items-center gap-1 mt-2" style="white-space: nowrap;">
+                                        <i class="material-icons-outlined">picture_as_pdf</i>
+                                        Manual Book
+                                    </a>
+                                    @elseif(in_array(auth()->user()->role_id, [2,4]))
+                                    <a href="{{ asset('Manual-Books/ManualBookPenilai.pdf') }}" target="_blank"
+                                        class="d-flex align-items-center gap-1 mt-2" style="white-space: nowrap;">
+                                        <i class="material-icons-outlined">picture_as_pdf</i>
+                                        Manual Book
+                                    </a>
+                                    @elseif(in_array(auth()->user()->role_id, [3]))
+                                    <a href="{{ asset('Manual-Books/ManualBookEvaluator.pdf') }}" target="_blank"
+                                        class="d-flex align-items-center gap-1 mt-2" style="white-space: nowrap;">
+                                        <i class="material-icons-outlined">picture_as_pdf</i>
+                                        Manual Book
+                                    </a>
+                                    @endif
                                 </div>
                                 <div class="vr"></div>
                                 <div class="">
