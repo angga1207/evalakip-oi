@@ -57,6 +57,11 @@ use App\Models\Data\Grade;
                                     <h4 class="mb-1 fw-semibold d-flex align-content-center"
                                         style="white-space: nowrap">
                                         {{ number_format($totalSkor, 2) ?? 0 }}
+                                        @php
+                                        $grade = Grade::where('nilai', '>=', $totalSkor)
+                                        ->orderBy('nilai', 'asc')
+                                        ->first();
+                                        @endphp
                                         ({{ $grade->predikat ?? 'E' }})
                                         <i class="ti ti-arrow-up-right fs-5 lh-base text-success"></i>
                                     </h4>
@@ -108,6 +113,7 @@ use App\Models\Data\Grade;
                 } elseif($instance->unit_id === 4) {
                 $cardBg = 'bg-grd-royal';
                 }
+                $grade = null;
                 @endphp
                 <div class="col-md-3">
                     {{-- <a
@@ -130,7 +136,8 @@ use App\Models\Data\Grade;
 
                                     <div class="">
                                         @php
-                                        $grade = Grade::where('nilai', '>=', $totalSkor)
+                                        $skor = $instance->GetSkor() ?? 0;
+                                        $grade = Grade::where('nilai', '>=', $skor)
                                         ->orderBy('nilai', 'asc')
                                         ->first();
                                         @endphp
