@@ -38,8 +38,9 @@ class Dashboard extends Component
             if ($instanceCount > 0) {
                 $totalSkor = $totalSkor / ($instanceCount);
             }
-            $grade = Grade::where('nilai', '<=', $totalSkor)
-                ->orderBy('nilai', 'desc')
+
+            $grade = Grade::where('nilai', '>=', $totalSkor)
+                ->orderBy('nilai', 'asc')
                 ->first();
 
             return view('livewire.dashboard', [
@@ -73,8 +74,9 @@ class Dashboard extends Component
                 }
             }
             $totalSkor = $totalSkor / ($instanceCount ?: 1);
-            $grade = Grade::where('nilai', '<=', $totalSkor)
-                ->orderBy('nilai', 'desc')
+
+            $grade = Grade::where('nilai', '>=', $totalSkor)
+                ->orderBy('nilai', 'asc')
                 ->first();
 
             return view('livewire.dashboard', [
@@ -102,8 +104,8 @@ class Dashboard extends Component
             //     ->where('is_verified', true)
             //     ->sum('skor');
             $skor = auth()->user()->instance->GetSkor() ?? 0;
-            $grade = Grade::where('nilai', '<=', $skor)
-                ->orderBy('nilai', 'desc')
+            $grade = Grade::where('nilai', '>=', $skor)
+                ->orderBy('nilai', 'asc')
                 ->first();
 
             $listGrade = Grade::orderBy('nilai', 'desc')

@@ -112,12 +112,13 @@ use App\Models\Data\Grade;
                     </div>
                     <div class="">
                         @php
-                        $grade = Grade::where('nilai', '<=', $totalSkor) ->orderBy('nilai', 'desc')
-                            ->first();
-                            @endphp
-                            <span class="badge bg-grd-royal fs-5">
-                                {{ $grade->predikat ?? 'E' }}
-                            </span>
+                        $grade = Grade::where('nilai', '>=', $totalSkor)
+                        ->orderBy('nilai', 'asc')
+                        ->first();
+                        @endphp
+                        <span class="badge bg-grd-royal fs-5">
+                            {{ $grade->predikat ?? 'E' }}
+                        </span>
                     </div>
                 </div>
                 <div class="">

@@ -130,13 +130,13 @@ use App\Models\Data\Grade;
 
                                     <div class="">
                                         @php
-                                        $grade = Grade::where('nilai', '<=', $instance->GetSkor() ?? 0)
-                                            ->orderBy('nilai', 'desc')
-                                            ->first();
-                                            @endphp
-                                            <span class="badge border fs-4">
-                                                {{ $grade->predikat ?? 'E' }}
-                                            </span>
+                                        $grade = Grade::where('nilai', '>=', $totalSkor)
+                                        ->orderBy('nilai', 'asc')
+                                        ->first();
+                                        @endphp
+                                        <span class="badge border fs-4">
+                                            {{ $grade->predikat ?? 'E' }}
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="position-absolute" style="bottom: 10px; left: 10px;">
