@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\References\Instance;
+
 ?>
 <div>
     <div wire:init='_getDataQuestionaries'></div>

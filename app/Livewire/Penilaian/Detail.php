@@ -142,6 +142,14 @@ class Detail extends Component
         // dd($this->isSubmitted ? 'Data sudah disubmit' : 'Data belum disubmit');
         // dd($this->dataQuestionaries, $this->dataPenilaian);
         // dd($this->dataPenilaian);
+
+        Instance::where('id', $user->instance_id)
+            ->update(['skor' => $totalSkor]);
+        DB::table('instance_skor')
+            ->updateOrInsert(
+                ['periode_id' => $this->periode->id, 'instance_id' => $user->instance_id],
+                ['skor' => $totalSkor]
+            );
     }
 
     public function render()

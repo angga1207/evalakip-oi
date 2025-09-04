@@ -103,7 +103,7 @@ class Dashboard extends Component
             //     ->where('is_submitted', true)
             //     ->where('is_verified', true)
             //     ->sum('skor');
-            $skor = auth()->user()->instance->GetSkor() ?? 0;
+            $skor = Instance::find($this->instanceId)->GetSkor() ?? 0;
             $grade = Grade::where('nilai', '>=', $skor)
                 ->orderBy('nilai', 'asc')
                 ->first();
