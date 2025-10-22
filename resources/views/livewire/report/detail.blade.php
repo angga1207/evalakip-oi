@@ -54,9 +54,6 @@
                             </td>
                         </tr>
                         @endforeach
-                    </tbody>
-
-                    <tfoot>
                         <tr class="align-middle bg-info">
                             <th class="border text-center text-dark">
                                 Nilai Akuntabilitas Kinerja
@@ -77,7 +74,30 @@
                                 {{ number_format(collect($datas)->sum('totalNilai'),2) }}
                             </th>
                         </tr>
-                    </tfoot>
+                    </tbody>
+
+                    {{-- <tfoot>
+                        <tr class="align-middle bg-info">
+                            <th class="border text-center text-dark">
+                                Nilai Akuntabilitas Kinerja
+                            </th>
+                            <th class="border text-center text-dark">
+                                {{ number_format(collect($datas)->sum('bobot'),2) }}
+                            </th>
+                            <th class="border text-center text-dark">
+                                {{ number_format(collect($datas)->sum('nilai1'),2) }}
+                            </th>
+                            <th class="border text-center text-dark">
+                                {{ number_format(collect($datas)->sum('nilai2'),2) }}
+                            </th>
+                            <th class="border text-center text-dark">
+                                {{ number_format(collect($datas)->sum('nilai3'),2) }}
+                            </th>
+                            <th class="border text-center text-dark">
+                                {{ number_format(collect($datas)->sum('totalNilai'),2) }}
+                            </th>
+                        </tr>
+                    </tfoot> --}}
                 </table>
             </div>
         </div>
@@ -137,6 +157,53 @@
                         className: 'p-0',
                         exportOptions: {
                             columns: ':not(.no-export)'
+                        },
+                        customize: function(xlsx) {
+                            // make header background color to #d1e7dd
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                            // set border for all cells
+                            $('row c', sheet).each( function () {
+                                $(this).attr( 's', '25' );
+                            } );
+
+                            $('row c[r^="A2"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="B2"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="C2"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="D2"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="E2"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="F2"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+
+                            $('row c[r^="A7"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="B7"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="C7"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="D7"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="E7"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
+                            $('row c[r^="F7"]', sheet).each( function () {
+                                $(this).attr( 's', '42' );
+                            } );
                         }
                     },
                     {
@@ -156,7 +223,7 @@
                         exportOptions: {
                             columns: ':not(.no-export)'
                         }
-                    }
+                    },
                 ],
 			} );
 
