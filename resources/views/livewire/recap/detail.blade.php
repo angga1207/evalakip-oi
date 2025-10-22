@@ -43,15 +43,19 @@ use App\Models\Data\Grade;
                             <span class="badge bg-grd-royal fs-6">
                                 @php
                                 $skor = 0;
-                                $average = 0;
+                                foreach($data['component']['children'] as $keySub => $subComponent) {
+                                    $skor = 0;
+                                    $average = 0;
 
-                                $sumJawabanSkor = collect($data['jawaban'])->collapse()->collapse()->sum('skor') ?? 0;
-                                $countActiveCriteria = collect($data['criterias'])->collapse()->where('is_active',
-                                true)->count();
-                                $average = $countActiveCriteria > 0 ? $sumJawabanSkor / $countActiveCriteria : 0;
-                                $skor = $average * $data['component']['bobot'];
-                                $totalSkor += $skor;
-                                $totalBobot += $data['component']['bobot'];
+                                    $sumJawabanSkor = collect($data['jawaban'][$keySub])->sum('skor') ?? 0;
+                                    $countActiveCriteria = collect($data['criterias'][$keySub])->where('is_active',
+                                    true)->count();
+                                    $average = $countActiveCriteria > 0 ? $sumJawabanSkor / $countActiveCriteria : 0;
+                                    $skr = $average * $subComponent['bobot'];
+                                    $skor += $skr;
+                                    $totalSkor += $skor;
+                                    $totalBobot += $subComponent['bobot'];
+                                }
                                 @endphp
                                 {{ number_format($skor, 2, ',', '.') }}
                             </span>
@@ -80,7 +84,7 @@ use App\Models\Data\Grade;
                                 $skor = 1;
                                 $average = 0;
 
-                                $sumJawabanSkor = collect($data['jawaban'][$keySub])->collapse()->sum('skor') ?? 0;
+                                $sumJawabanSkor = collect($data['jawaban'][$keySub])->sum('skor') ?? 0;
                                 $countActiveCriteria = collect($data['criterias'][$keySub])->where('is_active',
                                 true)->count();
                                 $average = $countActiveCriteria > 0 ? $sumJawabanSkor / $countActiveCriteria : 0;

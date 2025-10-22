@@ -59,12 +59,14 @@ class Detail extends Component
                         return Jawaban::where('ref_periode_id', $this->periode->id)
                             ->where('instance_id', $this->instance)
                             ->where('criteria_id', $criteria->id)
-                            ->get()
+                            ->first()
                             ->toArray();
                     });
                 })->toArray(),
             ];
         }
+
+        // dd($datas);
 
         return view('livewire.recap.detail', [
             'datas' => $datas,

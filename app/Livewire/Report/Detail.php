@@ -74,6 +74,7 @@ class Detail extends Component
             ];
         }
 
+        // dd($datas);
         // dd($komponents);
         return view('livewire.report.detail', [
             'datas' => $datas

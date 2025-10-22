@@ -70,8 +70,8 @@ class Instance extends Model
     function GetGrade()
     {
         $skor = $this->GetSkor() ?? 0;
-        $grade = Grade::where('nilai', '<=', $skor)
-            ->orderBy('nilai', 'desc')
+        $grade = Grade::where('nilai', '>=', $skor)
+            ->orderBy('nilai', 'asc')
             ->first();
         return $grade ? $grade->predikat : 'E';
     }

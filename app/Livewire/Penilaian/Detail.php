@@ -73,20 +73,12 @@ class Detail extends Component
                 ->whereIn('criteria_id', $PluckCriteriasIds)
                 ->where('instance_id', $user->instance_id)
                 ->get();
-            $countActiveCriterias = collect($questionary['children'])->pluck('criterias')->collapse()->where('is_active', true)->count();
-            $calculatedScore = 0.00;
-            if ($jawaban->count() > 0) {
-                $calculatedScore = $jawaban->sum('skor') * floatval($questionary['bobot']) / $countActiveCriterias;
-            }
-            $totalSkor += $calculatedScore;
 
             $this->dataPenilaian[$key] = [
                 'nama' => $questionary['nama'],
                 'children' => [],
-                'skor' => $calculatedScore,
             ];
             foreach ($questionary['children'] as $keyChild => $child) {
-
                 // calculated score = rata-rata skor dari semua kriteria di subkomponen dikali dengan bobot subkomponen
                 $jawaban = Jawaban::where('ref_periode_id', $this->periode->id)
                     ->whereIn('criteria_id', collect($child['criterias'])->pluck('id')->toArray())
@@ -135,7 +127,10 @@ class Detail extends Component
                     ];
                 }
             }
+            $this->dataPenilaian[$key]['skor'] = collect($this->dataPenilaian[$key]['children'])->sum('skor');
         }
+
+        $totalSkor = collect($this->dataPenilaian)->sum('skor');
 
         $this->totalSkor = $totalSkor;
         $this->totalBobot = $totalBobot;
