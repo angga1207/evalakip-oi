@@ -101,7 +101,11 @@
                     </div>
 
                     <div class="col-12">
-                        <p class="mb-0 text-center">
+                        <a href="https://pse.layanan.go.id/sealid/2566" target="_blank" class="mb-3">
+                            <img src="{{ asset('https://pse.layanan.go.id/api/storage/badge/badge_2566.png') }}"
+                                alt="Diskomifo" style="height: 40px; display: block; margin: 0 auto;">
+                        </a>
+                        <p class="mb-0 mt-3 text-center">
                             © {{ date('Y') == 2025 ? 2025 : '2025 - ' . date('Y') }}.
                             Diskomifo Kabupaten Ogan Ilir.
                         </p>
